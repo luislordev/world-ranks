@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    font-family: 'be-vietnam-pro', system-ui, sans-serif;
+}
+
+@font-face {
+    font-family: 'be-vietnam-pro';
+    src: url('assets/fonts/BeVietnamPro-Bold.ttf') format('ttf');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'be-vietnam-pro';
+    src: url('assets/fonts/BeVietnamPro-SemiBold.ttf') format('ttf');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}

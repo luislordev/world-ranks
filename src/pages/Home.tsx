@@ -2,6 +2,6 @@
 
 export const Home = () => {
   return (
-    <div>home</div>
+    <div className="font-semibold">home</div>
   )
 }
