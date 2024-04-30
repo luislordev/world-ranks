@@ -1,8 +1,14 @@
 import { AppRouter } from '@/router/AppRouter'
+import { Header } from '@/Components/Header'
 
 function App() {
   return (
-    <AppRouter />
+    <>
+      <Header />
+      <main>
+        <AppRouter />
+      </main>
+    </>
   )
 }
 

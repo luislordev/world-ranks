@@ -4,6 +4,8 @@
 
 :root {
     font-family: 'be-vietnam-pro', system-ui, sans-serif;
+    background-color: #1B1D1F;
+    color: #D2D5DA;
 }
 
 @font-face {
