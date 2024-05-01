@@ -1,24 +1,48 @@
+import { InputSearch } from "@/Components/InputSearch"
 import { getCountries } from "@/services/countries"
 import { Country } from "@/types/countries"
 import { useEffect, useState } from "react"
 
 
+
+const countryMatchesSearchTerm = (country: Country, term: string): boolean => {
+  const { name, region, subregion } = country
+  const lowerCaseTerm = term.toLowerCase()
+  return (
+    name.common.toLowerCase().includes(lowerCaseTerm) ||
+    region.toLowerCase().includes(lowerCaseTerm) ||
+    (!!subregion && subregion.toLowerCase().includes(lowerCaseTerm))
+  )
+}
+
 export const Home = () => {
 
   const [countries, setCountries] = useState<Country[]>([])
+  const [filteredCountries, setFilteredCountries] = useState<Country[]>([])
+  const [searchTerm, setSearchTerm] = useState<string>('')
 
   useEffect(() => {
-    getCountries().then(data => setCountries(data))
+    getCountries().then(data => {
+      setCountries(data)
+      setFilteredCountries(data)
+    })
   }, [])
-  
+
+  useEffect(() => {
+    const filtered = countries.filter(country => countryMatchesSearchTerm(country, searchTerm))
+    setFilteredCountries(filtered)
+  }, [countries, searchTerm])
+
+  const handleSearchTerm = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(evt.target.value)
+  }
+
 
   return (
     <section className="bg-bg-primary md:mx-5 lg:mx-10 -mt-12 rounded-lg border border-grey-dark/40 px-8">
-      <div className="flex flex-row items-center justify-between py-5">
-        <span className="font-semibold">Found 123 countries</span>
-        <div>
-          <input type="text" placeholder="Search by Name, Region, Subregion" />
-        </div>
+      <div className="flex flex-row items-center justify-between pt-6 pb-9">
+        <span className="font-semibold">Found {filteredCountries.length} countries</span>
+        <InputSearch onChange={handleSearchTerm} />
       </div>
       <div className="flex flex-col md:flex-row">
         <div>
@@ -27,9 +51,9 @@ export const Home = () => {
         {/* <div>Table</div> */}
         <div>
           {
-            countries.map(country =>(
+            filteredCountries.map(country => (
               <div key={country.name.common}>
-                 <h1>{country.name.common}</h1>
+                <h1>{country.name.common}</h1>
               </div>
             ))
           }
