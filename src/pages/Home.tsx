@@ -1,4 +1,5 @@
 import { InputSearch } from "@/Components/InputSearch"
+import { CountryList } from "@/Components/CountryList"
 import { getCountries } from "@/services/countries"
 import { Country } from "@/types/countries"
 import { useEffect, useState } from "react"
@@ -37,27 +38,17 @@ export const Home = () => {
     setSearchTerm(evt.target.value)
   }
 
-
   return (
     <section className="bg-bg-primary md:mx-5 lg:mx-10 -mt-12 rounded-lg border border-grey-dark/40 px-8">
       <div className="flex flex-row items-center justify-between pt-6 pb-9">
-        <span className="font-semibold">Found {filteredCountries.length} countries</span>
+        <span>Found {filteredCountries.length} countries</span>
         <InputSearch onChange={handleSearchTerm} />
       </div>
-      <div className="flex flex-col md:flex-row">
-        <div>
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="md:w-52 xl:w-64">
           Filters
         </div>
-        {/* <div>Table</div> */}
-        <div>
-          {
-            filteredCountries.map(country => (
-              <div key={country.name.common}>
-                <h1>{country.name.common}</h1>
-              </div>
-            ))
-          }
-        </div>
+        <CountryList classname="flex-1"  countries={filteredCountries}/>
       </div>
     </section>
   )

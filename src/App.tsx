@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <Header />
-      <main>
+      <main className='mx-auto max-w-screen-2xl'>
         <AppRouter />
       </main>
     </>
