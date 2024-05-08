@@ -1,5 +1,6 @@
 import { Country } from "@/types/countries"
 import { useState } from "react"
+import { CountryItem } from "@/Components/CountryItem"
 
 interface CountryListProps {
   countries: Country[]
@@ -20,21 +21,21 @@ export const CountryList = ({ classname, countries }: CountryListProps) => {
 
   return (
     <section className={`${classname}`}>
-      <div className="grid grid-cols-9 gap-8 md:gap-16 text-xs text-grey-dark border-b-2 pb-4 border-bg-secondary">
+      <div className="grid grid-cols-7 lg:grid-cols-9 gap-8 lg:gap-16 text-xs text-grey-dark border-b-2 pb-4 border-bg-secondary">
         <div className="col-span-1">Flag</div>
         <div className="col-span-2">Name</div>
         <div className="col-span-2">Population</div>
         <div className="col-span-2">Area(km<sup>2</sup>)</div>
-        <div className="hidden md:flex lg:col-span-2">Region</div>
+        <div className="hidden lg:flex lg:col-span-2">Region</div>
       </div>
-      <div>
+      <div className="mt-4">
         {
           countriesPaginated.map(country => (
-            <div>{country.name.common}</div>
+            <CountryItem country={country} key={country.name.common} />
           ))
         }
       </div>
-      <div className="flex items-center gap-4 mt-4 p-2">
+      <div className="flex items-center gap-4 mt-4 p-2 justify-center">
         <button
           onClick={() => handlePagination(currentPage > 1 ? currentPage - 1 : 1)}
           disabled={currentPage === 1}
