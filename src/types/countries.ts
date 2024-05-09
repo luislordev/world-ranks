@@ -300,3 +300,9 @@ export enum Status {
     OfficiallyAssigned = "officially-assigned",
     UserAssigned = "user-assigned",
 }
+
+export enum SortFilter {
+    Alphabetical = "alphabetical",
+    Population = "population",
+    Area = "area",
+}
