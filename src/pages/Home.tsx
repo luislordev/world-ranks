@@ -7,10 +7,12 @@ import { CountryList } from "@/Components/CountryList"
 import { Country, SortFilter } from "@/types/countries"
 import { ButtonPill } from "@/Components/ButtonPill"
 import { Checkbox } from "@/Components/Checkbox"
+import { CountryListSkeleton } from "@/Components/CountryListSkeleton"
 
 const sortFilterOptions = Object.values(SortFilter).map(value => ({ value, text: value.toString() }))
 
 export const Home = () => {
+  const [loading, setLoading] = useState<boolean>(true)
   const [countries, setCountries] = useState<Country[]>([])
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [sortFilter, setSortFilter] = useState<SortFilter>(SortFilter.Population)
@@ -29,6 +31,10 @@ export const Home = () => {
     getCountries().then(data => {
       setCountries(data)
     })
+      .catch((err) => {
+        console.error(err)
+      })
+      .finally(() => setLoading(false))
   }, [])
 
   const filteredCountries = useMemo(() => {
@@ -87,6 +93,7 @@ export const Home = () => {
     setIndependentCheckBox(prevState => !prevState)
   }
 
+
   return (
     <section className="bg-bg-primary md:mx-5 lg:mx-10 -mt-12 mb-12 rounded-lg border border-grey-dark/40 px-8">
       <div className="flex flex-row items-center justify-between pt-6 pb-9">
@@ -133,7 +140,11 @@ export const Home = () => {
             </Checkbox>
           </div>
         </section>
-        <CountryList classname="flex-1" countries={sortedCountries} />
+        {
+          loading
+            ? <CountryListSkeleton classname="flex-1" />
+            : <CountryList classname="flex-1" countries={sortedCountries} />
+        }
       </div>
     </section>
   )
